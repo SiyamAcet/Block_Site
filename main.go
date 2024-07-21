@@ -27,9 +27,16 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("someone visited the main page")
 }
 
+func DetailPage(w http.ResponseWriter, r *http.Request) {
+	view, _ := template.ParseFiles("detail.html")
+	view.Execute(w, nil)
+
+}
+
 func main() {
 	// Register the mainPage function as the handler for the root ("/") route.
 	http.HandleFunc("/", mainPage)
+	http.HandleFunc("/detail", DetailPage)
 
 	// Start the HTTP server and listen on port 8080.
 	http.ListenAndServe(":8080", nil)

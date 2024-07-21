@@ -16,7 +16,9 @@ import (
 func mainPage(w http.ResponseWriter, r *http.Request) {
 	view, _ := template.ParseFiles("index.html", "navbar.html")
 
-	view.ExecuteTemplate(w, "MainPage", nil)
+	data := "data coming from mainPage"
+
+	view.ExecuteTemplate(w, "MainPage", data)
 }
 
 func DetailPage(w http.ResponseWriter, r *http.Request) {

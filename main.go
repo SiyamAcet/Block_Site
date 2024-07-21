@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"text/template"
 )
@@ -15,21 +14,14 @@ import (
 // It parses the "index.html" template and executes it with no data.
 // It also prints a message to the console when someone visits the main page.
 func mainPage(w http.ResponseWriter, r *http.Request) {
-	view, _ := template.ParseFiles("index.html")
-	// data := make(map[string]interface{})
-	// data["data"] = "data coming from go"
+	view, _ := template.ParseFiles("index.html", "navbar.html")
 
-	data := make(map[string]interface{})
-	data["Numbers"] = []int{1, 2, 3, 4}
-	data["is_admin"] = false
-	data["num"] = 10
-	view.Execute(w, data)
-	fmt.Println("someone visited the main page")
+	view.ExecuteTemplate(w, "MainPage", nil)
 }
 
 func DetailPage(w http.ResponseWriter, r *http.Request) {
-	view, _ := template.ParseFiles("detail.html")
-	view.Execute(w, nil)
+	view, _ := template.ParseFiles("detail.html", "navbar.html")
+	view.ExecuteTemplate(w, "DetailPage", nil)
 
 }
 

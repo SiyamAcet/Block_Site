@@ -1,37 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"text/template"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-// type Data struct {
-// 	Message string
-// 	Numbers []int
-// }
+func MainPage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 
-// mainPage is the handler function for the main page.
-// It parses the "index.html" template and executes it with no data.
-// It also prints a message to the console when someone visits the main page.
-func mainPage(w http.ResponseWriter, r *http.Request) {
-	view, _ := template.ParseFiles("index.html", "navbar.html")
-
-	data := "data coming from mainPage"
-
-	view.ExecuteTemplate(w, "MainPage", data)
-}
-
-func DetailPage(w http.ResponseWriter, r *http.Request) {
-	view, _ := template.ParseFiles("detail.html", "navbar.html")
-	view.ExecuteTemplate(w, "DetailPage", nil)
+	view, _ := template.ParseFiles("index.html")
+	data := params.ByName("slug")
+	view.Execute(w, data)
+	fmt.Println("MainPage")
 
 }
 
 func main() {
-	// Register the mainPage function as the handler for the root ("/") route.
-	http.HandleFunc("/", mainPage)
-	http.HandleFunc("/detail", DetailPage)
-
-	// Start the HTTP server and listen on port 8080.
-	http.ListenAndServe(":8080", nil)
+	r := httprouter.New()
+	r.GET("/posts/:slug", MainPage)
+	http.ListenAndServe(":8080", r)
 }

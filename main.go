@@ -1,18 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// MainPage is a handler function for the main page of the website.
-// It takes in the http.ResponseWriter, http.Request, and httprouter.Params as parameters.
-// It parses the "index.html" template file and executes it with the provided data.
-// The data is retrieved from the "slug" parameter in the URL.
-// Finally, it prints "MainPage" to the console.
 func MainPage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 
 	view, _ := template.ParseFiles("index.html")
@@ -21,11 +17,10 @@ func MainPage(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 }
 
 func Test(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	check := r.FormValue("check")
-	select_input := r.FormValue("select")
-
-	fmt.Println(check, select_input)
-
+	r.ParseMultipartForm(10 << 20)
+	file, header, _ := r.FormFile("file")
+	f, _ := os.OpenFile(header.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	io.Copy(f, file)
 }
 
 func main() {

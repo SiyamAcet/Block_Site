@@ -1,31 +1,43 @@
 package main
 
 import (
-	"io"
-	"net/http"
-	"os"
-	"text/template"
-
-	"github.com/julienschmidt/httprouter"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-func MainPage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-
-	view, _ := template.ParseFiles("index.html")
-	view.Execute(w, nil)
-
-}
-
-func Test(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	r.ParseMultipartForm(10 << 20)
-	file, header, _ := r.FormFile("file")
-	f, _ := os.OpenFile(header.Filename, os.O_WRONLY|os.O_CREATE, 0666)
-	io.Copy(f, file)
+type User struct {
+	gorm.Model
+	UserName, Password string
 }
 
 func main() {
-	r := httprouter.New()
-	r.GET("/", MainPage)
-	r.POST("/test", Test)
-	http.ListenAndServe(":8080", r)
+	// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
+	dsn := "root:Siyam.95@tcp(127.0.0.1:3306)/blog_site_db?charset=utf8mb4&parseTime=True&loc=Local"
+	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	//db.AutoMigrate(&User{}) database table create and update
+
+	//db.Create(&User{UserName: "Siyam", Password: "123456"} ) //insert data
+
+	// var user User
+	//db.First(&user, 1) // find user with id 1
+	// db.First(&user, "password = ?", "123456") // find user with user_name Siyam
+	// fmt.Println(user.UserName)
+
+	// var users []User
+	// db.Find(&users)
+	// for _, user := range users {
+	// 	fmt.Println(user.UserName)
+	// }
+
+	// var user User
+	// db.First(&user, 1)
+	// db.Model(&user).Update("UserName", "Gandalf")
+
+	// var user User
+	// db.First(&user, 2)
+	// db.Model(&user).Updates(User{UserName: "pyton", Password: "pip"})
+
+	db.Delete(&User{}, 1)
+
 }

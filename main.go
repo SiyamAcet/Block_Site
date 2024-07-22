@@ -16,14 +16,21 @@ import (
 func MainPage(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 
 	view, _ := template.ParseFiles("index.html")
-	data := params.ByName("slug")
-	view.Execute(w, data)
-	fmt.Println("MainPage")
+	view.Execute(w, nil)
+
+}
+
+func Test(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	check := r.FormValue("check")
+	select_input := r.FormValue("select")
+
+	fmt.Println(check, select_input)
 
 }
 
 func main() {
 	r := httprouter.New()
-	r.GET("/posts/:slug", MainPage)
+	r.GET("/", MainPage)
+	r.POST("/test", Test)
 	http.ListenAndServe(":8080", r)
 }

@@ -1,0 +1,15 @@
+{{define "footer"}}
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Golang Blog <span id = "year"></span></span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+<script>
+    var d = new Date();
+    document.getElementById("year").innerText = d.getFullYear();
+</script>
+{{end}}

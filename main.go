@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
-	admin_models "example.com/my-blog/admin/models"
 	"example.com/my-blog/config"
 )
 
@@ -25,7 +23,7 @@ func main() {
 
 	// fmt.Println(post.Title)
 
-	fmt.Println(admin_models.Post{}.GetAll())
+	// fmt.Println(admin_models.Post{}.GetAll())
 
 	http.ListenAndServe(":8080", config.Routes())
 

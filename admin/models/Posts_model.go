@@ -57,3 +57,33 @@ func (post Post) GetAll(where ...interface{}) []Post {
 	db.Find(&posts, where...)
 	return posts
 }
+
+func (post Post) Update(column string, value interface{}) {
+	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	db.Model(&post).Update(column, value)
+}
+
+func (post Post) Updates(data Post) {
+	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	db.Model(&post).Updates(data)
+}
+
+func (post Post) Delete() {
+	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	db.Delete(&post, post.ID)
+}

@@ -22,3 +22,15 @@ func (dashboard Dashboard) Index(w http.ResponseWriter, r *http.Request, params 
 	view.ExecuteTemplate(w, "index", nil)
 
 }
+
+func (dashboard Dashboard) NewItems(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	view, err := template.ParseFiles(helpers.Include("dashboard/add")...)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	view.ExecuteTemplate(w, "index", nil)
+
+}

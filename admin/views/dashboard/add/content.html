@@ -1,21 +1,21 @@
 {{define "content"}}
 <h1>
    Add New Blog Text
-   <a href="/admin" class = "btn btn-primary float-right" ><i class= "fa fa-arrow-left"></i>Go Back</a>
+   <a href="/admin" class = "btn btn-outline-primary float-right" ><i class= "fa fa-arrow-left"></i>Go Back</a>
 </h1>
 <hr>
 <form action="/admin/add" method="post" enctype="multipart/form-data">
    <div class="form-group">
       <label>Title</label>
-      <input type="text" name="Title" class="form-control">
+      <input type="text" name="blog-title" class="form-control">
    </div>
    <div class="form-group">
       <label>Blog Text Description</label>
-      <textarea name="Description" cols="30" rows="2" class="form-control"></textarea>
+      <textarea name="blog-desc" cols="30" rows="2" class="form-control"></textarea>
    </div>
     <div class="form-group">
         <label>Category</label>
-        <select name="category" class="form-control">
+        <select name="blog-category" class="form-control">
             <option value="1">Technology</option>
             <option value="2">Art</option>
             <option value="3">History</option>
@@ -23,14 +23,14 @@
     </div>
     <div class="form-group">
         <label>Image</label>
-        <input type="file" name="image" class="form-control-file">
+        <input type="file" name = "blog-picture" class="form-control-file"> 
     </div>
     <div class="form-group">
         <label>Blog Text Content</label>
-        <textarea name="content" id="summernote" cols="30" rows="10" class="form-control"></textarea>
+        <textarea name="blog-content" id="summernote" cols="30" rows="10" class="form-control"></textarea>
         
     </div>
-    <button type="submit" class="btn btn-outline-primary w-100 my-3">Add Blog Text</button>
+    <button type="submit" class="btn btn-outline-success w-100 my-3">Add Blog Text</button>
 </form>
 
 {{end}}

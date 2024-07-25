@@ -13,8 +13,11 @@ func Routes() *httprouter.Router {
 	r.GET("/admin", admin.Dashboard{}.Index)
 	r.GET("/admin/add-new", admin.Dashboard{}.NewItems)
 	r.POST("/admin/add", admin.Dashboard{}.Add)
+	r.GET("/admin/delete/:id", admin.Dashboard{}.Delete)
+	r.GET("/admin/edit/:id", admin.Dashboard{}.Edit)
 	//serve static files
 	r.ServeFiles("/admin/assets/*filepath", http.Dir("admin/assets"))
+	r.ServeFiles("/uploads/*filepath", http.Dir("uploads"))
 
 	return r
 

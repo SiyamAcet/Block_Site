@@ -25,7 +25,10 @@ func (dashboard Dashboard) Index(w http.ResponseWriter, r *http.Request, params 
 		return
 	}
 
-	view.ExecuteTemplate(w, "index", nil)
+	data := make(map[string]interface{})
+	data["Posts"] = models.Post{}.GetAll()
+
+	view.ExecuteTemplate(w, "index", data)
 
 }
 
@@ -82,5 +85,27 @@ func (dashboard Dashboard) Add(w http.ResponseWriter, r *http.Request, params ht
 	}.Add()
 
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+
+}
+
+func (dashboard Dashboard) Delete(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	post := models.Post{}.Get((params.ByName("id")))
+	post.Delete()
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+
+}
+
+func (dashboard Dashboard) Edit(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	view, err := template.ParseFiles(helpers.Include("dashboard/edit")...)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["Post"] = models.Post{}.Get(params.ByName("id"))
+
+	view.ExecuteTemplate(w, "index", data)
 
 }

@@ -8,31 +8,30 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Image</th> 
+        <th scope="col">Title</th>
+        <th scope="col">Category</th>
+        <th scope="col">Upload Date</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
+      {{range $index,$value := .Posts}}
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <th scope="row">{{$value.ID}}</th>
+        <td><img width="80px" src="{{$value.Picture_url}}"></td>
+        <td>{{$value.Title}}</td>
+        <td>{{$value.CategoryID}}</td>
+        <td>{{$value.CreatedAt}}</td>
+        <td>
+          <a href="/admin/edit/{{ $value.ID }}" class="btn btn-outline-warning"><i class="fa fa-pen"></i></a>
+          <a href="/admin/delete/{{ $value.ID }}" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+        </td>
+        
       </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      {{end}}
     </tbody>
+     
   </table>
 
 {{end}}

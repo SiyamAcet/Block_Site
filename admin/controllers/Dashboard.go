@@ -18,6 +18,7 @@ import (
 type Dashboard struct{}
 
 func (dashboard Dashboard) Index(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+
 	view, err := template.ParseFiles(helpers.Include("dashboard/list")...)
 
 	if err != nil {
@@ -27,7 +28,7 @@ func (dashboard Dashboard) Index(w http.ResponseWriter, r *http.Request, params 
 
 	data := make(map[string]interface{})
 	data["Posts"] = models.Post{}.GetAll()
-
+	data["Alert"] = helpers.GetAlert(w, r)
 	view.ExecuteTemplate(w, "index", data)
 
 }
@@ -82,6 +83,7 @@ func (dashboard Dashboard) Add(w http.ResponseWriter, r *http.Request, params ht
 		Picture_url: "uploads/" + header.Filename,
 	}.Add()
 
+	helpers.SetAlert(w, r, "Blog text succesfully saved!")
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 
 }

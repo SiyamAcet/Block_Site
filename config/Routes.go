@@ -19,7 +19,8 @@ func Routes() *httprouter.Router {
 
 	// userops
 	r.GET("/admin/login", admin.Userops{}.Index)
-	r.POST("/admin/login", admin.Userops{}.Login)
+	r.POST("/admin/do_login", admin.Userops{}.Login)
+	r.GET("/admin/logout", admin.Userops{}.Logout)
 	//serve static files
 	r.ServeFiles("/admin/assets/*filepath", http.Dir("admin/assets"))
 	r.ServeFiles("/uploads/*filepath", http.Dir("uploads"))

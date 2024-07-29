@@ -19,6 +19,8 @@ func Routes() *httprouter.Router {
 
 	//Categories
 	r.GET("/admin/categories", admin.Categories{}.Index)
+	r.POST("/admin/categories/add", admin.Categories{}.Add)
+	r.GET("/admin/categories/delete/:id", admin.Categories{}.Delete)
 
 	// userops
 	r.GET("/admin/login", admin.Userops{}.Index)

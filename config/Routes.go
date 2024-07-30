@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	admin "example.com/my-blog/admin/controllers"
+	site "example.com/my-blog/site/controllers"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -26,6 +27,10 @@ func Routes() *httprouter.Router {
 	r.GET("/admin/login", admin.Userops{}.Index)
 	r.POST("/admin/do_login", admin.Userops{}.Login)
 	r.GET("/admin/logout", admin.Userops{}.Logout)
+
+	//site
+	r.GET("/", site.Homepage{}.Index)
+	r.GET("/text/:slug", site.Homepage{}.Detail)
 
 	//serve static files
 	r.ServeFiles("/admin/assets/*filepath", http.Dir("admin/assets"))
